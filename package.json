@@ -20,5 +20,10 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@reown/walletkit": "^1.2.11",
+    "@walletconnect/core": "^2.21.9",
+    "@walletconnect/utils": "^2.21.9"
+  }
 }

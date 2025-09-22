@@ -135,15 +135,6 @@ export function Navbar() {
               <span className="sr-only">Search</span>
             </Button>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <Wallet className="h-4 w-4" />
-              <span className="sr-only">Connect Wallet</span>
-            </Button>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -171,7 +162,10 @@ export function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Button className="hidden md:inline-flex">Get Started</Button>
+            <Button className="hidden md:inline-flex  hover:cursor-pointer">
+              <Wallet className="h-4 w-4" />
+              <span className="">Connect Wallet</span>
+            </Button>
           </div>
         </div>
       </div>
