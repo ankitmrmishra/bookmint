@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import "./wallet.css";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +23,11 @@ import {
   Music,
   Trophy,
 } from "lucide-react";
+import {
+  WalletConnectButton,
+  WalletMultiButton,
+} from "@solana/wallet-adapter-react-ui";
+import WalletButton from "@/components/walletconnectbutton/wallet-button";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -162,10 +168,7 @@ export function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Button className="hidden md:inline-flex  hover:cursor-pointer">
-              <Wallet className="h-4 w-4" />
-              <span className="">Connect Wallet</span>
-            </Button>
+            <WalletButton />
           </div>
         </div>
       </div>

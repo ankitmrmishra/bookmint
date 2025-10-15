@@ -233,3 +233,7 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
+
+button.wallet-adapter-button-trigger {
+  @apply bg-secondary rounded-sm; /* etc */
+}
