@@ -17,12 +17,12 @@ export const getUsers = async (walletAddress: string) => {
   }
 };
 
-export const getUserByUsername = async (username: string) => {
+export const getUserByWalletAddress = async (wallet: string) => {
   try {
     const data = await db
       .select()
       .from(usersTable)
-      .where(eq(usersTable.username, username))
+      .where(eq(usersTable.wallet, wallet))
       .limit(1);
     return data[0] || null;
   } catch (error) {
@@ -34,7 +34,6 @@ export const getUserByUsername = async (username: string) => {
 export const createUser = async (userData: {
   wallet: string;
   walletname?: string;
-  username: string;
 }) => {
   try {
     const newUser = await db
@@ -42,7 +41,6 @@ export const createUser = async (userData: {
       .values({
         wallet: userData.wallet,
         name: userData.walletname || null,
-        username: userData.username,
       })
       .returning();
 
