@@ -29,7 +29,7 @@ import {
 } from "@solana/wallet-adapter-react-ui";
 import WalletButton from "@/components/walletconnectbutton/wallet-button";
 
-export function Navbar() {
+export default function page() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

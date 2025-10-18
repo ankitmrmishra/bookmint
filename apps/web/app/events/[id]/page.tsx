@@ -8,12 +8,13 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { MoreLikeThis } from "@/components/pages/events/more-like-this";
 
-export default function EventDetailPage({
+export default async function EventDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const event = getEventById(params.id);
+  const id = (await params).id;
+  const event = getEventById(id);
   if (!event) return notFound();
 
   return (
@@ -33,7 +34,7 @@ export default function EventDetailPage({
         <article className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold">About this event</h2>
-            <LikeButton eventId={event.id} baseLikes={event.initialLikes} />
+            {/* <LikeButton eventId={event.id} baseLikes={event.initialLikes} /> */}
           </div>
           <p className="leading-relaxed text-pretty">{event.description}</p>
           <div className="flex flex-wrap items-center gap-2">

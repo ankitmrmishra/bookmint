@@ -1,9 +1,17 @@
-import { events } from "@/data/events"
-import { EventCard } from "./event-card"
+import { events } from "@/data/events";
+import { EventCard } from "./event-card";
 
-export function MoreLikeThis({ currentId, category }: { currentId: string; category: string }) {
-  const related = events.filter((e) => e.category === category && e.id !== currentId).slice(0, 3)
-  if (related.length === 0) return null
+export function MoreLikeThis({
+  currentId,
+  category,
+}: {
+  currentId: string;
+  category: string;
+}) {
+  const related = events
+    .filter((e) => e.category === category && e.id !== currentId)
+    .slice(0, 3);
+  if (related.length === 0) return null;
   return (
     <section aria-labelledby="related-title" className="space-y-3">
       <h3 id="related-title" className="text-xl font-medium">
@@ -13,7 +21,7 @@ export function MoreLikeThis({ currentId, category }: { currentId: string; categ
         {related.map((e) => (
           <EventCard
             key={e.id}
-            id={e.id}
+            id={e.id as unknown as number}
             title={e.title}
             category={e.category}
             image={e.image}
@@ -25,5 +33,5 @@ export function MoreLikeThis({ currentId, category }: { currentId: string; categ
         ))}
       </div>
     </section>
-  )
+  );
 }
