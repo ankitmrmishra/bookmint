@@ -185,7 +185,7 @@ export default function WalletButton() {
 
   return (
     <>
-      <Toaster position="top-right" richColors closeButton />
+      <Toaster position="bottom-center" richColors closeButton />
 
       <div className="flex items-center">
         {connected && walletAddress ? (

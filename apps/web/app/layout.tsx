@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { SolanaProvider } from "@/providers/solana-provider";
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,6 +28,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} dark no-scrollbar`}
       >
+        <Toaster position="bottom-center" richColors closeButton />
+
         <SolanaProvider>{children}</SolanaProvider>
       </body>
     </html>

@@ -1,46 +1,49 @@
-"use client"
+"use client";
 
-import React from "react"
-import { cn } from "@/lib/utils"
+import React, { useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 type Props = {
-  eventId: string
-  baseLikes?: number
-  className?: string
-}
+  eventId: number;
+  baseLikes?: number;
+  className?: string;
+};
 
 export function LikeButton({ eventId, baseLikes = 0, className }: Props) {
-  const storageKey = `likes:${eventId}`
-  const [liked, setLiked] = React.useState(false)
-  const [count, setCount] = React.useState(baseLikes)
+  const storageKey = `likes:${eventId}`;
+  const [liked, setLiked] = React.useState(false);
+  const [count, setCount] = React.useState(baseLikes);
 
-  React.useEffect(() => {
-    const stored = localStorage.getItem(storageKey)
+  useEffect(() => {
+    const stored = localStorage.getItem(storageKey);
     if (stored) {
-      const parsed = JSON.parse(stored) as { liked: boolean; count: number }
-      setLiked(parsed.liked)
-      setCount(parsed.count)
+      const parsed = JSON.parse(stored) as { liked: boolean; count: number };
+      setLiked(parsed.liked);
+      setCount(parsed.count);
     }
-  }, [storageKey])
+  }, [eventId]);
 
   const toggle = () => {
     setLiked((prev) => {
-      const next = !prev
+      const next = !prev;
       setCount((c) => {
-        const updated = next ? c + 1 : Math.max(0, c - 1)
-        localStorage.setItem(storageKey, JSON.stringify({ liked: next, count: updated }))
-        return updated
-      })
-      return next
-    })
-  }
+        const updated = next ? c + 1 : Math.max(0, c - 1);
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify({ liked: next, count: updated })
+        );
+        return updated;
+      });
+      return next;
+    });
+  };
 
   return (
     <button
       onClick={toggle}
       className={cn(
         "inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-secondary",
-        className,
+        className
       )}
       aria-pressed={liked}
       aria-label={liked ? "Unlike" : "Like"}
@@ -59,5 +62,5 @@ export function LikeButton({ eventId, baseLikes = 0, className }: Props) {
       </svg>
       <span className="tabular-nums">{count}</span>
     </button>
-  )
+  );
 }

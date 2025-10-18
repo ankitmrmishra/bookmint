@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { events } from "@/data/events";
 import { EventCard } from "./event-card";
+import { getEvents } from "@/actions/event-action-fetch-events";
 
-export default function EventPage() {
+export default async function EventPage() {
+  const events = await getEvents();
+
   return (
     <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
       <section className="mb-8 flex items-end justify-between">
@@ -22,21 +24,32 @@ export default function EventPage() {
         </Link>
       </section>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {events.map((e) => (
-          <EventCard
-            key={e.id}
-            id={e.id}
-            title={e.title}
-            category={e.category}
-            image={e.image}
-            rating={e.rating}
-            price={e.price}
-            venue={e.venue}
-            city={e.city}
-          />
-        ))}
-      </div>
+      {events.length === 0 ? (
+        <div className="py-12 text-center text-muted-foreground">
+          No events available at the moment.
+        </div>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {events.map((event) => (
+            <EventCard
+              key={event.id}
+              id={event.id}
+              title={event.title}
+              category={event.category}
+              image={event.thumbnailUrl || event.imageUrl}
+              rating={0} // Default rating for new events
+              price={parseFloat(event.price)}
+              venue={event.venue}
+              city={event.city}
+              date={new Date(event.date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            />
+          ))}
+        </div>
+      )}
     </main>
   );
 }

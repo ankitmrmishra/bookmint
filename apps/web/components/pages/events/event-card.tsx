@@ -1,41 +1,71 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { RatingStars } from "./rating-stars"
-import { LikeButton } from "./like-button"
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { RatingStars } from "./rating-stars";
+import { LikeButton } from "./like-button";
+import { cn } from "@/lib/utils";
+import { Calendar } from "lucide-react";
+import Image from "next/image";
 
 type Props = {
-  id: string
-  title: string
-  category: string
-  image: string
-  rating: number
-  price: number
-  venue: string
-  city: string
-  className?: string
-}
+  id: number;
+  title: string;
+  category: string;
+  image: string;
+  rating: number;
+  price: number;
+  venue: string;
+  city: string;
+  date?: string; // Added date prop
+  className?: string;
+};
 
 export function EventCard(props: Props) {
-  const { id, title, category, image, rating, price, venue, city, className } = props
+  const {
+    id,
+    title,
+    category,
+    image,
+    rating,
+    price,
+    venue,
+    city,
+    date,
+    className,
+  } = props;
   return (
     <Card
       className={cn(
         "group overflow-hidden border-border bg-card text-card-foreground transition-all duration-300 hover:-translate-y-1 hover:border-foreground/40",
-        className,
+        className
       )}
     >
-      <Link href={`/events/${id}`} className="block focus:outline-none focus:ring-2 focus:ring-ring">
+      <Link
+        href={`/events/${id}`}
+        className="block focus:outline-none focus:ring-2 focus:ring-ring"
+      >
         <div className="relative aspect-[16/9] overflow-hidden">
-          <img
+          <Image
+            width={500}
+            height={500}
             src={image || "/placeholder.svg"}
             alt={`${title} cover`}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
+          {date && (
+            <div className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-md bg-background/95 px-2.5 py-1.5 text-xs font-medium backdrop-blur-sm">
+              <Calendar className="h-3.5 w-3.5" />
+              {date}
+            </div>
+          )}
         </div>
-        <CardHeader className="space-y-2">
+        <CardHeader className="space-y-2 my-4">
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <span className="uppercase tracking-wider">{category}</span>
             <RatingStars rating={rating} />
@@ -52,5 +82,5 @@ export function EventCard(props: Props) {
         <LikeButton eventId={id} />
       </CardFooter>
     </Card>
-  )
+  );
 }
