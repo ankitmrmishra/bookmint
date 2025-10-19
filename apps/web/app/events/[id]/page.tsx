@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getEventById } from "@/data/events";
+import { getEventById } from "@/actions/event-action-fetch-events";
 import { EventHero } from "@/components/pages/events/event-hero";
 import { LikeButton } from "@/components/pages/events/like-button";
 import { Comments } from "@/components/pages/events/comments";
@@ -14,18 +14,31 @@ export default async function EventDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
-  const event = getEventById(id);
+  const event = await getEventById(id);
+
   if (!event) return notFound();
+
+  // Format date and time from ISO string
+  const eventDate = new Date(event.date);
+  const formattedDate = eventDate.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  const formattedTime = eventDate.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-8 sm:py-12">
       <EventHero
         title={event.title}
-        image={event.image}
-        rating={event.rating}
-        price={event.price}
-        date={event.date}
-        time={event.time}
+        image={event.imageUrl}
+        rating={0} // Default rating for new events
+        price={parseFloat(event.price)}
+        date={formattedDate}
+        time={formattedTime}
         venue={event.venue}
         city={event.city}
       />
@@ -34,26 +47,22 @@ export default async function EventDetailPage({
         <article className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold">About this event</h2>
-            {/* <LikeButton eventId={event.id} baseLikes={event.initialLikes} /> */}
           </div>
           <p className="leading-relaxed text-pretty">{event.description}</p>
           <div className="flex flex-wrap items-center gap-2">
-            {event.tags.map((t) => (
-              <Badge
-                key={t}
-                variant="outline"
-                className="rounded-full border-border text-xs"
-              >
-                {t}
-              </Badge>
-            ))}
+            <Badge
+              variant="outline"
+              className="rounded-full border-border text-xs"
+            >
+              {event.category}
+            </Badge>
           </div>
 
           <Separator />
           <div className="grid gap-3 text-sm text-muted-foreground">
             <div>
               <span className="mr-2 text-foreground">Date:</span>
-              {event.date} at {event.time}
+              {formattedDate} at {formattedTime}
             </div>
             <div>
               <span className="mr-2 text-foreground">Venue:</span>
@@ -64,12 +73,13 @@ export default async function EventDetailPage({
               {event.category}
             </div>
             <div>
-              <span className="mr-2 text-foreground">Price:</span>${event.price}
+              <span className="mr-2 text-foreground">Price:</span>$
+              {parseFloat(event.price).toFixed(2)}
             </div>
           </div>
 
           <Separator />
-          <Comments eventId={event.id} initial={event.initialComments} />
+          <Comments eventId={event.id as unknown as string} initial={[]} />
         </article>
 
         <aside className="space-y-6">

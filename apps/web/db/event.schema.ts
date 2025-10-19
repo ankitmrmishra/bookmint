@@ -6,7 +6,7 @@ import {
   timestamp,
   decimal,
 } from "drizzle-orm/pg-core";
-import { usersTable } from "../(auth)/users-schema";
+import { usersTable } from "./users.schema";
 
 export const eventsTable = pgTable("events", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

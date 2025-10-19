@@ -1,37 +1,47 @@
-import { events } from "@/data/events";
+import { getEventsByCategory } from "@/actions/event-action-fetch-events";
 import { EventCard } from "./event-card";
 
-export function MoreLikeThis({
-  currentId,
-  category,
-}: {
-  currentId: string;
+interface MoreLikeThisProps {
+  currentId: number;
   category: string;
-}) {
-  const related = events
-    .filter((e) => e.category === category && e.id !== currentId)
-    .slice(0, 3);
-  if (related.length === 0) return null;
+}
+
+export async function MoreLikeThis({ currentId, category }: MoreLikeThisProps) {
+  const relatedEvents = await getEventsByCategory(category, 4);
+
+  // Filter out the current event
+  const filteredEvents = relatedEvents.filter(
+    (event) => event.id !== currentId
+  );
+
+  // Only show if there are related events
+  if (filteredEvents.length === 0) {
+    return null;
+  }
+
   return (
-    <section aria-labelledby="related-title" className="space-y-3">
-      <h3 id="related-title" className="text-xl font-medium">
-        More like this
-      </h3>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {related.map((e) => (
+    <div>
+      <h2 className="text-2xl font-semibold mb-6">More like this</h2>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredEvents.slice(0, 3).map((event) => (
           <EventCard
-            key={e.id}
-            id={e.id as unknown as number}
-            title={e.title}
-            category={e.category}
-            image={e.image}
-            rating={e.rating}
-            price={e.price}
-            venue={e.venue}
-            city={e.city}
+            key={event.id}
+            id={event.id}
+            title={event.title}
+            category={event.category}
+            image={event.thumbnailUrl || event.imageUrl}
+            rating={0}
+            price={parseFloat(event.price)}
+            venue={event.venue}
+            city={event.city}
+            date={new Date(event.date).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
           />
         ))}
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import { pgTable, varchar, integer, timestamp } from "drizzle-orm/pg-core";
-import { usersTable } from "../(auth)/users-schema";
-import { eventsTable } from "../(cdn)/cdn-schema";
+import { usersTable } from "./users.schema";
+import { eventsTable } from "./event.schema";
 
 export const bookingsTable = pgTable("bookings", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

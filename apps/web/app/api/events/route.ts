@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/drizzle";
-import { eventsTable } from "@/db/(cdn)/cdn-schema";
+import { eventsTable } from "@/db/event.schema";
 import { desc } from "drizzle-orm";
 import { getUserByWalletAddress } from "@/actions/userAction";
 

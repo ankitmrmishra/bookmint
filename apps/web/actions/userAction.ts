@@ -1,5 +1,5 @@
 "use server";
-import { usersTable } from "@/db/(auth)/users-schema";
+import { usersTable } from "@/db/users.schema";
 import { db } from "@/db/drizzle";
 import { eq } from "drizzle-orm";
 
