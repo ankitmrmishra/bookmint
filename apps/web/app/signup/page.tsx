@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Logo from "@/components/ui/global/logo";
+import { signIn } from "next-auth/react";
 
 const AuthInterface = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -27,6 +28,7 @@ const AuthInterface = () => {
   };
 
   const handleGoogleAuth = () => {
+    signIn("google");
     console.log("Google authentication initiated");
   };
 
