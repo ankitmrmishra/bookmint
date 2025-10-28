@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import type { PublicKey } from "@solana/web3.js";
 
 interface EventData {
+  userId: string | null;
   title: string;
   description: string;
   category: string;
@@ -25,7 +26,6 @@ interface EventData {
   venue: string;
   city: string;
   price: number;
-  wallet: PublicKey | null;
 }
 
 interface FormSectionProps {

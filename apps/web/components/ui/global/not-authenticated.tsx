@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Wallet } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import WalletButton from "@/components/walletconnectbutton/wallet-button";
+import WalletButton from "@/components/walletconnectbutton/auth-button";
 
 export default function NotAuthenticated() {
   return (

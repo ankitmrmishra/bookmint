@@ -1,4 +1,4 @@
-import { createUser, getUsers } from "@/actions/userAction";
+import { createUser, getUsers } from "@/actions/user.actions";
 import { db } from "@/db/drizzle";
 import { NextRequest, NextResponse } from "next/server";
 

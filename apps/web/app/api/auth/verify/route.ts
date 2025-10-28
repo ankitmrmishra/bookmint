@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { PublicKey } from "@solana/web3.js";
 import nacl from "tweetnacl";
 import { getNonce, deleteNonce } from "@/lib/redis";
-import { createUser, getUsers } from "@/actions/userAction";
+import { createUser, getUsers } from "@/actions/user.actions";
 
 export async function POST(req: Request) {
   try {

@@ -27,7 +27,7 @@ import {
   WalletConnectButton,
   WalletMultiButton,
 } from "@solana/wallet-adapter-react-ui";
-import WalletButton from "@/components/walletconnectbutton/wallet-button";
+import WalletButton from "@/components/walletconnectbutton/auth-button";
 
 export default function page() {
   const [isOpen, setIsOpen] = useState(false);
