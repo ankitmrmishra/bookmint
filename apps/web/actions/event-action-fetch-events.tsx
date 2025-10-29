@@ -16,7 +16,7 @@ interface Event {
   venue: string;
   city: string;
   price: string;
-  organizerId: number;
+
   createdAt: string;
   updatedAt: string;
 }
