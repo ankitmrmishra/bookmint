@@ -14,7 +14,7 @@ import { Calendar } from "lucide-react";
 import Image from "next/image";
 
 type Props = {
-  id: number;
+  id: string;
   title: string;
   category: string;
   image: string;
@@ -79,7 +79,7 @@ export function EventCard(props: Props) {
       </Link>
       <CardFooter className="flex items-center justify-between border-t border-border pt-3">
         <span className="text-foreground">{"$" + price}</span>
-        <LikeButton eventId={id} />
+        {/* <LikeButton eventId={id as unknown as n} /> */}
       </CardFooter>
     </Card>
   );

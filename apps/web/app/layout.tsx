@@ -4,6 +4,7 @@ import "./globals.css";
 import { SolanaProvider } from "@/providers/solana-provider";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
+import Navbar from "./(landingpage)/navbar/page";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,7 +32,10 @@ export default function RootLayout({
       >
         <Toaster position="bottom-center" richColors closeButton />
 
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <Navbar />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

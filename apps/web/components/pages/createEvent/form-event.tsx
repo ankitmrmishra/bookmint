@@ -46,7 +46,7 @@ const ALLOWED_FILE_TYPES = [
   "image/webp",
 ];
 
-const CATEGORIES = [
+export const CATEGORIES = [
   "Music",
   "Arts",
   "Sports",

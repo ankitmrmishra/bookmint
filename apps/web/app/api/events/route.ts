@@ -21,6 +21,7 @@ import { db } from "@/db/drizzle";
 import { eventsTable } from "@/db/event.schema";
 import { desc } from "drizzle-orm";
 import { getUserById } from "@/actions/user.actions";
+import { auth } from "@/auth";
 
 /**
  * @async
@@ -49,6 +50,8 @@ import { getUserById } from "@/actions/user.actions";
  * }
  */
 export async function POST(request: NextRequest) {
+  const session = await auth();
+
   try {
     const body = await request.json();
 
@@ -56,8 +59,15 @@ export async function POST(request: NextRequest) {
      * ✅ Step 1: Validate that the user exists.
      * The frontend provides `userId` directly; if invalid, we reject the request early.
      */
-    const user = await getUserById(body.userId);
-    if (!user) {
+
+    if (!session?.user.id) {
+      return NextResponse.json(
+        { error: "User not authenticated, please authenticate " },
+        { status: 404 }
+      );
+    }
+    const userid = await getUserById(session?.user.id);
+    if (!userid) {
       return NextResponse.json(
         { error: "User not found for the given user ID" },
         { status: 404 }
@@ -107,7 +117,7 @@ export async function POST(request: NextRequest) {
         venue: body.venue,
         city: body.city,
         price: body.price.toString(),
-        organizerId: user.id,
+        organizerId: session.user.id,
       })
       .returning();
 

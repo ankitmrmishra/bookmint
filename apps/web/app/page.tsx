@@ -11,7 +11,6 @@ export default function HomePage() {
     <div className="min-h-screen  no-scrollbar">
       {/* <div className="w-[1px] absolute min-h-screen border-r-2 border-dashed border-border -top-10 left-52 hidden md:block" />
       <div className="w-[1px] absolute min-h-screen border-r-2 border-dashed border-border -top-10 right-52 hidden md:block" /> */}
-      <Navbar />
 
       <Hero />
     </div>
